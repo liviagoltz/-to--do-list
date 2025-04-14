@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Minhas Tarefas</title>
+   <style>
+      * {
+         font-size: 25px;
+         color: rgb(0, 0, 0);
+         background-color: rgb(230, 200, 255);
+         font-family: sans-serif;
+      }
+
+      button {
+         background-color: rgb(255, 174, 221);
+         color: rgb(0, 0, 0);
+         margin-left: 10px;
+         cursor: pointer;
+      }
+
+      .btn-remover {
+         font-size: 14px;
+         padding: 2px 6px;
+         background-color: #ffb6ef;
+         border: none;
+         border-radius: 4px;
+         margin-left: 10px;
+      }
+
+      h1 {
+         font-size: 48px;
+      }
+
+      li {
+         margin-bottom: 10px;
+         cursor: pointer;
+      }
+
+      .concluida {
+         text-decoration: line-through;
+         color: rgb(255, 0, 0);
+      }
+
+      input {
+         padding: 5px;
+         font-size: 20px;
+      }
+   </style>
+</head>
+
+<body>
+   <h1>Tarefas</h1>
+
+   <ul id="lista-tarefas">
+      <!-- Tarefas aparecem aqui -->
+   </ul>
+
+   <input id="campo-tarefa" placeholder="Digite sua tarefa" />
+   <button onclick="add()">Adicionar</button>
+
+   <script>
+      const input = document.querySelector("#campo-tarefa");
+
+      input.addEventListener("keydown", function (event) {
+         if (event.key === "Enter") {
+            add();
+         }
+      });
+
+      function add() {
+         const ul = document.querySelector("#lista-tarefas");
+         const tarefaTexto = input.value.trim();
+
+         if (tarefaTexto === "") return;
+
+         const li = document.createElement("li");
+
+         // Clicar na tarefa risca ela
+         li.onclick = function () {
+            li.classList.toggle("concluida");
+         };
+
+         // Texto da tarefa
+         const spanTexto = document.createElement("span");
+         spanTexto.innerText = tarefaTexto;
+
+         // Botão de remover
+         const btnRemover = document.createElement("button");
+         btnRemover.innerText = "Remover";
+         btnRemover.classList.add("btn-remover"); // 👈 aplica a classe com estilo menor
+         btnRemover.onclick = function (event) {
+            event.stopPropagation();
+            li.remove();
+         };
+
+         li.appendChild(spanTexto);
+         li.appendChild(btnRemover);
+         ul.appendChild(li);
+
+         input.value = "";
+      }
+   </script>
+</body>
+
+</html>
